@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Welcome</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class='container'>
+		<h3>Welcome!</h3>
+		<div class="col-sm-6">
+			<form class='form-group' action='/register' method='post'>
+				{% csrf_token %}
+				<h4>Register</h4>
+				<label>Name: <input class='form-control' type="text" name="name"></label><br>
+				<label>Alias: <input class='form-control' type="text" name="alias"></label><br>
+				<label>Email: <input class='form-control' type="text" name="email"></label><br>
+				<label>Password: <input class='form-control' type="password" name="pword"></label><br>
+				<p>*Password should be at least 8 characters</p>
+				<label>Confrim PW: <input class='form-control' type="password" name="cpword"></label><br>
+				<button>Register</button>
+			</form>
+			{% if messages %}
+			<ul class="messages">
+    			{% for message in messages %}
+    			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}
+    		</li>
+    			{% endfor %}
+			</ul>
+			{% endif %}
+		</div>
+		<div class="border border-dark">
+			<form class='form-group' action='/login' method='post'>
+				{% csrf_token %}
+				<h4>Login</h4>
+				<label>Email: <input class='form-control' type="text" name="email"></label><br>
+				<label>Password: <input class='form-control' type="password" name="pword"></label><br>
+				<button>Login</button>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

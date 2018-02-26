@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Books Home</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class='container'>
+		<div class='col-md-6'>
+			<h4 class='pull-left'>Welcome, {{user.name}}!</h4>
+		</div>
+		<div class='col-md-6'>
+			<a class='pull-right' href="/logout"> Logout </a><span class='pull-right'> | </span><a class='pull-right' href="/books/add"> Add Book and Review </a> 
+		</div>
+		<div class='col-md-12'>
+			<div class='panel panel-info'>
+				<h4 class='panel-heading'>Recent Book Reviews:</h4>
+				<div class='panel-body'>
+					{% for review in reviews %}
+					<div>
+						<h4><a href="/books/{{review.book.id}}">{{review.book.title}}</a></h4>
+						<p>Rating: {{review.rating}}</p>
+						<p><a href="/users/{{review.reviewer.id}}">{{review.reviewer.name}}</a> says: {{review.content}}</p>
+						<p>{{review.created_at}}</p>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div class='col-md-12'>
+			<div class='panel panel-primary'>
+				<h4 class='panel-heading'>Other Books with Reviews:</h4>
+				<div class='panel-body'>
+					{% for x in books %}
+					<a href="/books/{{x.id}}">{{x.title}}</a><br>
+					{% endfor %}
+				</div>	
+			</div>
+		</div>
+	</div>
+</body>
+</html>

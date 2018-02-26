@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Books and Reviews</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class='container'>
+		<a href="/books">Home</a>
+		<a href="/logout">Logout</a>
+		<h4>{{books.title}}</h4>
+		<p>Author: {{books.author}}</p>
+		<div class='panel panel-info col-md-6'>
+			<h4 class='panel-heading'>Reviews:</h4>
+			{% for x in reviews %}
+			<div class='panel-body'>
+				<p>Rating: {{x.rating}}</p>
+				<p><a href="/users/{{x.reviewer.id}}">{{x.reviewer.name}}</a> says: {{x.content}}</p>
+				<p>{{x.created_at}}</p>
+				{% if x.reviewer.id == uid %}
+					<a href="/books/reviews/delete/{{x.id}}">Delete</a>
+				{% endif %}
+			</div>
+			{% endfor %}
+		</div>
+		<div class='col-md-6'>
+			<form class='form-group' action="/books/reviews/{{books.id}}" method='post'>
+				{% csrf_token %}
+				<h5>Add a Review:</h5>
+				<textarea class='form-control' name='review' rows="5" cols="30"></textarea>
+				<label class="control-label">Rating:</label>
+				<select class='form-control input-sm' name='rating'>
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+				</select><br>
+				<button>Submit Review</button>
+			</form>
+			{% if messages %}
+			<ul class="messages">
+    			{% for message in messages %}
+    			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    			{% endfor %}
+			</ul>
+			{% endif %}	
+		</div>
+	</div>
+	
+</body>
+</html>

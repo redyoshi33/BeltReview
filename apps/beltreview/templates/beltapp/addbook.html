@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Welcome</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class='container'>
+		<a href="/books">Home</a>
+		<a href="/logout">Logout</a>
+		<h4>Add a New Book Title and a Review:</h4>
+		<form class="form-group" action='/books/submit' method='post'>
+			{% csrf_token %}
+			<label class="control-label">Book Title: <input type="text" name="title"></label><br>
+			<label class="control-label">Author:</label>
+			<p>Choose from the list: 
+			<select class='form-group' name='oldauthor'>
+				<option value=''>Select author</option>
+				{% for x in authors %}
+				<option>{{ x }}</option>
+				{% endfor %}
+			</select>
+			</p>
+			<p>Or add a new author: <input class='form-group' type="text" name="newauthor"></p>
+			<label class="control-label">Review: </label><br>
+			<textarea class='form-group' name='review' rows="5" cols="30"></textarea><br>
+			<label class="control-label">Rating:</label>
+			<select class='form-group' name='rating'>
+				 <option value="1">1</option>
+				 <option value="2">2</option>
+				 <option value="3">3</option>
+				 <option value="4">4</option>
+				 <option value="5">5</option>
+			</select><br>
+			<button>Add Book and Review</button>
+		</form>
+		{% if messages %}
+			<ul class="messages">
+    			{% for message in messages %}
+    			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}
+    		</li>
+    			{% endfor %}
+			</ul>
+		{% endif %}	
+	</div>
+</body>
+</html>
